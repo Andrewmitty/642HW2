@@ -1,0 +1,37 @@
+# Part A:
+
+## Recovered password
+bjacobson password: 22005597
+ceccio password: 02361267
+
+## Pseudocode for attack
+Given that the password is a 8 digit number, we can use a brute force attack to find the password.
+We use a for loop to iterate through all possible passwords and check if the hash of the password matches the hash given.
+If the hash matches, we have found the password.
+
+To start, we make many nested for loops, each starting at -1 and ending at 10.
+This is because although we know the password can be up to 8 digits, it does not have to be. When the number is -1, we
+replace that with a blank space to account for passwords less than 8 digits in length.
+In the core of the for loops, we craft together a password given each current value of the for loops and create a hash of it.
+If it is equal to the hash given, we have found the password. If not, we continue iterating through all possible passwords.
+
+## Worst case running time
+O(11^n) where n is the number of digits in the password. In this case, n = 8, so the running time is O(11^8).
+
+## Discussion of current proposal and suggestions for improvement
+We can assume in todays society that for an all numerical password, the user will not use a password under 4 digits.
+Therefore we can decrease the running time by changing the for loops to start at 0 for the first 4 loops.
+
+# Part B:
+
+## Discussion of the current scheme
+
+## Suggestions for improving the scheme
+
+
+# Part C:
+
+## Secret code
+
+## Explanation
+
