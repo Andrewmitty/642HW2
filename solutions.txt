@@ -36,3 +36,14 @@ Congrats! Your Secret_Code=0aAEe62E-3e7a7512
 
 ## Explanation
 
+To start, I needed to learn more about the cryptography library,
+as there were many functions I had never used before. I learned
+about forming public and private keys, and how to use them to
+generate dh keys using the Diffie-Hellman key exchange algorithm.
+
+After that, I was able to create a private key and a public key
+and from there, I was able to form gx. I needed to then encode it and send
+it to the server. I did this by using the base64 encoding scheme.
+After that, I sent the request, and put the appropriate data in
+to each of the variables needed below. After that, the result we needed
+was printed.
