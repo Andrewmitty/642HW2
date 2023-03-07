@@ -47,3 +47,14 @@ it to the server. I did this by using the base64 encoding scheme.
 After that, I sent the request, and put the appropriate data in
 to each of the variables needed below. After that, the result we needed
 was printed.
+
+# Extra Credit
+
+## Password
+Decrypted Password is: Cheeseisgood!
+
+## Psuedocode
+I used the crackstation-human-only.txt file to create a dictionary of words. I filtered this list to only include words
+that were 6 characters long or more. This reduced the size of the list by quite a bit. I then iterated through the list
+and created a hash of each word using the scrypt algorithm. If the hash matched the hash given, I had found the password.
+This took quite a while and I could have further optimized it by further filtering the list of words.
