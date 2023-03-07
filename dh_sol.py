@@ -33,9 +33,6 @@ Below all the functions that you might need are already imported.
 
 """
 
-
-
-
 import requests
 import base64
 from cryptography.fernet import Fernet
@@ -45,17 +42,35 @@ from cryptography.hazmat.primitives.kdf.hkdf import HKDF
 from cryptography.hazmat.primitives.serialization import Encoding, PublicFormat
 import json
 
-URL = ""  ## Update this URL to match the IP given in the instructions.
+URL = "http://128.105.19.18:8080"  ## Update this URL to match the IP given in the instructions.
 
 EC_CURVE = ec.SECP384R1()
 ENCODING = Encoding.X962
 FORMAT = PublicFormat.CompressedPoint
 
-
 #### Your code starts here #####
 
 
+private_key = ec.generate_private_key(EC_CURVE)
+public_key = private_key.public_key()
+gx = public_key.public_bytes(ENCODING, FORMAT)
+gx_str = base64.urlsafe_b64encode(gx).decode('utf-8')
+print(gx_str)
+r = requests.get(f"{URL}/dh?gx={gx_str}", params={
+    'gx': base64.urlsafe_b64encode(gx)
+})
 
+r.raise_for_status()
+
+data = json.loads(r.content)
+print(data)
+
+gybytes = base64.urlsafe_b64decode(data['gy'])
+gy = ec.EllipticCurvePublicKeyWithSerialization.from_encoded_point(EC_CURVE, gybytes)
+c = data['c']
+
+shared_key = private_key.exchange(ec.ECDH(), gy)
+gxy = shared_key
 
 #### Don't change the code below ####
 k = base64.urlsafe_b64encode(HKDF(
@@ -63,11 +78,11 @@ k = base64.urlsafe_b64encode(HKDF(
     length=32,
     salt=None,
     info=b'handshake data'
-).derive(gxy)) # gxy = <g^xy>
+).derive(gxy))  # gxy = <g^xy>
 
 m = Fernet(k).decrypt(c.encode('ascii'))
 print(m)
-                      
+
 sc = m.split(b'=', 1)[1]
 
 r = requests.get(URL + '/verify', params={

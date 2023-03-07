@@ -32,6 +32,7 @@ Therefore we can decrease the running time by changing the for loops to start at
 # Part C:
 
 ## Secret code
+Congrats! Your Secret_Code=0aAEe62E-3e7a7512
 
 ## Explanation
 
