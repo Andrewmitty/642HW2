@@ -5,7 +5,6 @@
 # Outputs a modified ciphertext and tag
 
 import sys
-import Crypto.Cipher.AES
 import hashlib
 
 # Grab ciphertext from first argument
@@ -16,50 +15,29 @@ if len(ciphertextWithTag) < 16 + 16 + 32:
     sys.exit(0)
 
 iv = ciphertextWithTag[:16]
-ciphertext = ciphertextWithTag[:len(ciphertextWithTag) - 32]
+#adding 16 to skip iv in ciphertext
+ciphertext = ciphertextWithTag[16:len(ciphertextWithTag) - 32]
 tag = ciphertextWithTag[len(ciphertextWithTag) - 32:]
 
-#Find the position of the amount field in the plaintext message
-# plaintext = Crypto.Cipher.AES.new(b"\x00"*16, Crypto.Cipher.AES.MODE_CBC, IV=iv).decrypt(ciphertext)
-# amount_pos = plaintext.find(b"$")
+# changing the IV
+new_val = bytearray("AMOUNT:$ 9999.99", "utf-8")
+old_val = bytearray("AMOUNT: $  12.99", "utf-8")
 
-#Modify the amount field to a more lucrative value
-# new_amount = b"$9999.99"
-# new_plaintext = plaintext[:amount_pos] + new_amount + plaintext[amount_pos+len(new_amount):]
+for i in range(len(new_val)):
+    new_val[i] = new_val[i] ^ old_val[i]
+    new_val[i] = new_val[i] ^ iv[i]
 
-plaintext = """AMOUNT: $  12.99
+iv = bytes(new_val)
+
+new_plaintext = \
+    """AMOUNT:$ 9999.99
 Originating Acct Holder: Alexa
 Orgininating Acct #98166-20633
 
-I authorized the above amount to be transferred to the account #51779-31226
+I authorized the above amount to be transferred to the account #51779-31226 
 held by a Wisc student at the National Bank of the Cayman Islands.
 """
 
-new_plaintext = """AMOUNT: $1299.99
-Originating Acct Holder: Alexa
-Orgininating Acct #98166-20633
-
-I authorized the above amount to be transferred to the account #51779-31226
-held by a Wisc student at the National Bank of the Cayman Islands.
-"""
-
-# Recalculate the tag using the modified plaintext
-
-
-# Construct the new ciphertext by encrypting the modified plaintext with the same key and IV
-# cipher = Crypto.Cipher.AES.new(b'\x00' * 16, Crypto.Cipher.AES.MODE_CBC, IV=iv)
-# new_ciphertext = cipher.encrypt(new_plaintext).hex()
-# new_tag = hashlib.sha256(new_plaintext).hexdigest()
-
-# new_ciphertext = new_iv.hex() + ciphertext.hex() + tag.hex()
-ascii_plain_text = plaintext[:16].encode('ascii')
-# ascii_plain_text = codecs.encode(ascii_plain_text, 'hex')
-# print(ascii_plain_text)
-
-
-E = ascii_plain_text ^ iv #xor to get E, followed steps from the stackoverflow article
-#https://crypto.stackexchange.com/questions/85785/can-you-change-an-aes-encrypted-message-if-you-control-the-iv
-print(E)
-
-# Print the new encrypted message
-print(iv.hex() + new_ciphertext + new_tag)
+tag = hashlib.sha256(new_plaintext.encode()).hexdigest()
+# you can change the print content if necessary
+print(iv.hex() + ciphertext.hex() + tag)

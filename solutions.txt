@@ -19,8 +19,8 @@ If it is equal to the hash given, we have found the password. If not, we continu
 O(11^n) where n is the number of digits in the password. In this case, n = 8, so the running time is O(11^8).
 
 ## Discussion of current proposal and suggestions for improvement
-We can assume in todays society that for an all numerical password, the user will not use a password under 4 digits.
-Therefore we can decrease the running time by changing the for loops to start at 0 for the first 4 loops.
+We can assume in today's society that for an all numerical password, the user will not use a password under 4 digits.
+Therefore, we can decrease the running time by changing the for loops to start at 0 for the first 4 loops.
 
 # Part B:
 
