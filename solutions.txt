@@ -1,3 +1,6 @@
+Andrew Mitty (amitty) CS: Mitty
+Lilly Peraulta (lperalta) CS: Lillian
+
 # Part A:
 
 ## Recovered password
@@ -5,7 +8,7 @@ bjacobson password: 22005597
 ceccio password: 02361267
 
 ## Pseudocode for attack
-Given that the password is a 8 digit number, we can use a brute force attack to find the password.
+Given that the password is an 8-digit number, we can use a brute force attack to find the password.
 We use a for loop to iterate through all possible passwords and check if the hash of the password matches the hash given.
 If the hash matches, we have found the password.
 
@@ -25,14 +28,22 @@ Therefore, we can decrease the running time by changing the for loops to start a
 # Part B:
 
 ## Discussion of the current scheme
+The current scheme is insecure because it lacks the randomness which it is trying to accomplish by using an IV. Since the
+IV is transported with the message, an attacker can easily change the message to be whatever they want. This is because
+the IV is utilized in the decryption process using xor operations. If the attacker knows the IV, they can change the message
+to whatever they want since the IV is used in the decryption process.
 
 ## Suggestions for improving the scheme
-
+One suggestion I have is to not transport the IV with the message. Instead, the IV should be generated randomly and
+stored on the server. The server should then send the encrypted message to the client. The client should then decrypt
+the message using the IV stored on the server. This way, the IV is not transported with the message and an attacker
+cannot change the message.
 
 # Part C:
 
 ## Secret code
-Congrats! Your Secret_Code=0aAEe62E-3e7a7512
+Congrats! Your Secret_Code=E2a4F0cc-984af758
+The code is valid!
 
 ## Explanation
 

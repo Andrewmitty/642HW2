@@ -57,14 +57,14 @@ assert(passwordGuess("user", "12345", "999999") == "c50603be4fedef7a260ef9181a60
 
 # Set the hash and salt for each username and run the crackPassword function
 
-bjacobsenHash = "ffa2dcdd84a45582b17d4f535cda63887273f34a679eded10428b480999c3a8b"
-bjacobsenSalt = "980166"
-crackPassword("bjacobsen", bjacobsenHash, bjacobsenSalt)
+# bjacobsenHash = "ffa2dcdd84a45582b17d4f535cda63887273f34a679eded10428b480999c3a8b"
+# bjacobsenSalt = "980166"
+# crackPassword("bjacobsen", bjacobsenHash, bjacobsenSalt)
 
 
-# ceccioHash = "41db4f70c8ce1c866462b4c0636aef38c1ea5ef36809bf099165c826bc3a8881"
-# ceccioSalt = "547750"
-# crackPassword("ceccio", ceccioHash, ceccioSalt)
+ceccioHash = "41db4f70c8ce1c866462b4c0636aef38c1ea5ef36809bf099165c826bc3a8881"
+ceccioSalt = "547750"
+crackPassword("ceccio", ceccioHash, ceccioSalt)
 #
 #verifying that the crackPassword function works given my own
 # mittyHash = passwordGuess("mitty", "09876543", "123499")
